@@ -1,19 +1,23 @@
 ## Import the Book class from the models module
 from bookshelf.models import Book 
 
-## Filter and delete specific book title
-book_to_delete = Book.objects.filter(book.title__startswith="Nineteen")
+## Filter books with a title starting with "Nineteen"
+books_to_delete = Book.objects.filter(title__startswith="Nineteen")
 
 ## Check if any books were found and delete them
-if book_to_delete.exists():
-	book_to_delete.delete()
-	print("Book(s) with title starting with 'Nineteen' deleted successfully.")
+if books_to_delete.exists():
+	for book in books_to_delete:
+		book.delete()
+		print(f"Deleted: Title: {book.title}, Author: {book.author}, Year: {book.publication_year}")
+	print("All books with title starting with 'Nineteen' deleted successfully.")
 else:
-	print("No books were found with title 'Nineteen'.")
+	print("No books were found with the title starting with 'Nineteen'.")
 
-## Display remaining book Instances
-if books.exists():
-	for book in books:
+## Retrieve and display remaining Book instances
+remaining_books = Book.objects.all()
+
+if remaining_books.exists():
+	for book in remaining_books:
 		print(f"Title: {book.title}, Author: {book.author}, Year: {book.publication_year}")
 else:
 	print("No books found. All books deleted.")
