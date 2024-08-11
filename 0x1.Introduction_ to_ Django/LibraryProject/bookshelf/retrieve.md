@@ -2,7 +2,7 @@
 from bookshelf.models import Book
 
 ## Retrieve all Book instances from the database
-books = Book.objects.all()
+books = Book.objects.get(title="1984")
 
 ## Iterate through the QuerySet and display the attributes of each Book instance
 for book in books:
