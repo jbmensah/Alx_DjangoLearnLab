@@ -20,13 +20,13 @@ print("Books by George R.R. Martin:")
 george_rr_martin = Author.objects.get(name="George R.R. Martin")
 books_by_george = Book.objects.filter(author=george_rr_martin)
 for book in books_by_george:
-    print(book.title)
+	print(book.title)
 
 # List all books
 print("\nAll books:")
 all_books = Book.objects.all()
 for book in all_books:
-    print(book.title)
+	print(book.title)
 
 # Create Library Instance
 accra_library = Library.objects.create(name='Accra Central Library')
@@ -37,10 +37,11 @@ accra_library.book.add(game_of_thrones, clash_of_kings, atomic_habits)
 
 # List all books in Library
 print("\nBooks in Accra Central Library:")
-library = Library.objects.get(name='Accra Central Library')
-books_in_library = library.book.all()
-for book in books_in_library:
-    print(book.title)
+accra_library.book.all()
+Library.objects.get(name='Accra Central Library')
+
+# for book in books_in_library:
+#     print(book.title)
 
 # Add Librarian
 librarian = Librarian.objects.create(name='Akua Sekyiwaa', library=accra_library)
