@@ -13,10 +13,10 @@ Book.objects.all()
 
 # Get books by one author
 print("Books by George R.R. Martin:")
-author_name = Author.objects.get(name__startswith="George")
-for books in author_name:
+author = Author.objects.get(name__startswith="George")
+for books in author:
     print(books.title)
-book_au = Book.objects.filter(author=author_name)
+book_au = Book.objects.filter(author=author)
 for books in book_au:
     print(books.title)
 
