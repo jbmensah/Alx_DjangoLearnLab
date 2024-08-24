@@ -34,8 +34,8 @@ lib.book.add(bk, bk1, bk2)
 
 # List all books in the Library using the desired structure
 print("\nBooks in Accra Central Library:")
-library = Library.objects.get(name="Accra Central Library")
-books_in_library = library.book.all()
+# library = Library.objects.get(name="Accra Central Library")
+books_in_library = Library.objects.get(name=lib).book.all()
 for book in books_in_library:
     print(book.title)
 
@@ -49,7 +49,6 @@ librarian = Librarian.objects.create(name='Akua Sekyiwaa Afrifa', library=lib)
 
 # Retrieve a Librarian for a library
 Librarian.objects.get(library=lib)
-
 
 
 import readline
