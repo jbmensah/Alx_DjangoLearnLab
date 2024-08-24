@@ -27,15 +27,15 @@ for books in all_bks:
     print(books.title)
 
 # Create a Library Instance
-lib = Library.objects.create(name="Accra Central Library")
+library_name = Library.objects.create(name="Accra Central Library")
 
 # Add books to Library
-lib.book.add(bk, bk1, bk2)
+library_name.book.add(bk, bk1, bk2)
 
 # List all books in the Library using the desired structure
 print("\nBooks in Accra Central Library:")
 # library = Library.objects.get(name="Accra Central Library")
-books_in_library = Library.objects.get(name=lib).book.all()
+books_in_library = Library.objects.get(name=library_name).book.all()
 for book in books_in_library:
     print(book.title)
 
@@ -45,10 +45,10 @@ for book in books_in_library:
 #     print(book.title)
 
 # Add Librarian
-librarian = Librarian.objects.create(name='Akua Sekyiwaa Afrifa', library=lib)
+librarian = Librarian.objects.create(name='Akua Sekyiwaa Afrifa', library=library_name)
 
 # Retrieve a Librarian for a library
-Librarian.objects.get(library=lib)
+Librarian.objects.get(library=library_name)
 
 
 import readline
