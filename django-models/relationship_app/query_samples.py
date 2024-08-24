@@ -1,22 +1,22 @@
 from relationship_app.models import Author, Book, Library, Librarian
 # Add Author to objects
-au = Author.objects.create(name="George R.R Martin")
-au1 = Author.objects.create(name="James Clear")
+author_name = Author.objects.create(name="George R.R Martin")
+author_name1 = Author.objects.create(name="James Clear")
 Author.objects.all()
 
 # Add Book Objects
-bk = Book.objects.create(title="A Game of Thrones", author=au)
-bk1 = Book.objects.create(title="Atomic Habits", author=au1)
+bk = Book.objects.create(title="A Game of Thrones", author=author_name)
+bk1 = Book.objects.create(title="Atomic Habits", author=author_name1)
 Book.objects.all()
-bk2 = Book.objects.create(title="A Clash of Kings", author=au)
+bk2 = Book.objects.create(title="A Clash of Kings", author=author_name)
 Book.objects.all()
 
 # Get books by one author
 print("Books by George R.R. Martin:")
-au = Author.objects.get(name__startswith="George")
-for books in au:
+author_name = Author.objects.get(name__startswith="George")
+for books in author_name:
     print(books.title)
-book_au = Book.objects.filter(author=au)
+book_au = Book.objects.filter(author=author_name)
 for books in book_au:
     print(books.title)
 
