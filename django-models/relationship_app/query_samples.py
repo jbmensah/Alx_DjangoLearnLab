@@ -35,7 +35,7 @@ library_name.book.add(bk, bk1, bk2)
 # List all books in the Library using the desired structure
 print("\nBooks in Accra Central Library:")
 # library = Library.objects.get(name="Accra Central Library")
-books_in_library = Library.objects.get(name=library_name).book.all()
+books_in_library = Library.objects.get(name=library_name).books.all()
 for book in books_in_library:
     print(book.title)
 
