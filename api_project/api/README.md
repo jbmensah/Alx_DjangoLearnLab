@@ -10,8 +10,8 @@
 ---
 ---
 ## Task 1 : Building Your First API Endpoint with Django REST Framework
-### - [ ] *Create the Serializer*
-### - [ ] *Create the API View*
+### - [x] *Create the Serializer*
+### - [x] *Create the API View*
 ### - [ ] *Configure URL Patterns*
 ### - [ ] *Test the API Endpoint*
 ---
