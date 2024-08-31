@@ -1,6 +1,10 @@
-from .views import BookList
-from django.urls import path
+from rest_framework.routers import DefaultRouter
+from .views import BookViewSet
+from django.urls import path, include
+
+router = DefaultRouter()
+router.register(r'books', BookViewSet)
 
 urlpatterns = [
-	path("api/books/", BookList.as_view(), name="book_list"),
+	path("api/", include(router.urls)),
 ]
