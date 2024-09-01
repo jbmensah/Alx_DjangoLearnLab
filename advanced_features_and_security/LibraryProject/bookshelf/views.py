@@ -2,6 +2,25 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponseForbidden
 from .models import Book
+from .forms import ExampleForm
+
+
+def form_example_view(request):
+	if request.method == 'POST':
+		form = ExampleForm(request.POST)
+		if form.is_valid():
+			search_query = form.cleaned_data['search']
+			# Using ORM to safely query the database
+			books = Book.objects.filter(title__icontains=search_query)
+			return render(request, 'bookshelf/book_list.html', {'books': books})
+	else:
+		form = ExampleForm()
+
+	return render(request, 'bookshelf/form_example.html', {'form': form})
+
+def book_list_view(request):
+	books = Book.objects.all()
+	return render(request, 'bookshelf/book_list.html', {'books': books})
 
 # View for listing books - anyone logged in can view
 @login_required
