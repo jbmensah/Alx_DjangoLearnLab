@@ -79,6 +79,15 @@ SECURE_HSTS_SECONDS = 31536000  # One year in seconds
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply HSTS to all subdomains
 SECURE_HSTS_PRELOAD = True  # Allow site to be preloaded in HSTS lists
 
+# Clickjacking protection
+X_FRAME_OPTIONS = 'DENY'  # Prevents the site from being embedded in iframes
+
+# Prevent MIME type sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents browsers from guessing content types
+
+# XSS protection
+SECURE_BROWSER_XSS_FILTER = True  # Enables the browser's XSS filter
+
 WSGI_APPLICATION = 'LibraryProject.wsgi.application'
 
 SECURE_BROWSER_XSS_FILTER = True
