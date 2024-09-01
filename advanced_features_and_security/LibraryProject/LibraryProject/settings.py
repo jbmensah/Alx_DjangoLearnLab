@@ -70,6 +70,15 @@ TEMPLATES = [
     },
 ]
 
+
+# Enforce HTTPS
+SECURE_SSL_REDIRECT = True  # Redirect all HTTP requests to HTTPS
+
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # One year in seconds
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply HSTS to all subdomains
+SECURE_HSTS_PRELOAD = True  # Allow site to be preloaded in HSTS lists
+
 WSGI_APPLICATION = 'LibraryProject.wsgi.application'
 
 SECURE_BROWSER_XSS_FILTER = True
@@ -78,9 +87,9 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 X_FRAME_OPTIONS = 'DENY'
 
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True   # Ensure CSRF cookies are only sent over HTTPS
 
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True    # Ensure session cookies are only sent over HTTPS
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
