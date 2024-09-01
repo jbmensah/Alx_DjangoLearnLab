@@ -88,6 +88,8 @@ SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents browsers from guessing content ty
 # XSS protection
 SECURE_BROWSER_XSS_FILTER = True  # Enables the browser's XSS filter
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 WSGI_APPLICATION = 'LibraryProject.wsgi.application'
 
 SECURE_BROWSER_XSS_FILTER = True
