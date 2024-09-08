@@ -9,7 +9,7 @@ class BookViewSet(viewsets.ModelViewSet):
 	serializer_class = BookSerializer
 	permission_classes = [IsAuthenticated]  # Apply the IsAuthenticated permission class
 
-class BookList(generics.ListCreateAPIView):
+class BookList(generics.ListAPIView):
 	queryset = Book.objects.all()
 	serializer_class = BookSerializer
 	permission_classes = [IsAuthenticated]  # Apply the IsAuthenticated permission class
