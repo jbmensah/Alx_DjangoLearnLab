@@ -25,7 +25,7 @@ class PostForm(forms.ModelForm):
 		model = Post
 		fields = ['title', 'content', 'tags']
 		widgets = {
-			'tags': TagWidget(attrs={'placeholder': 'Enter tags...'}),
+			'tags': TagWidget(), # 'tags': TagWidget(attrs={'placeholder': 'Enter tags...'}),
 		}
 		labels = {
 			'title': 'Title',
