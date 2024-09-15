@@ -1,8 +1,15 @@
+from django.forms import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .models import Post
+from .forms import PostForm
 
 # Create your views here.
 def home(request):
@@ -49,4 +56,44 @@ def profile(request):
 	else:
 		form = CustomUserCreationForm(instance=request.user)
 	return render(request, 'registration/profile.html', {'form': form})
+
+
+
+class PostListView(ListView):
+	model = Post
+	template_name = 'blog/posts_list.html'
+	context_object_name = 'posts'
+
+
+class PostDetailView(DetailView):
+	model = Post
+	template_name = 'blog/post_detail.html'
+	context_object_name = 'post'
+
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+	model = Post
+	template_name = 'blog/post_form.html'
+	form_class = PostForm
 	
+	def form_valid(self, form):
+		form.instance.author = self.request.user
+		return super().form_valid(form)
+	
+
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+	model = Post
+	template_name = 'blog/post_form.html'
+	form_class = PostForm
+
+	def get_queryset(self):
+		return Post.objects.filter(author=self.request.user)
+
+
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+	model = Post
+	template_name = 'blog/post_confirm_delete.html'
+	success_url = reverse_lazy('post_list')
+
+	def get_queryset(self):
+		return Post.objects.filter(author=self.request.user)
