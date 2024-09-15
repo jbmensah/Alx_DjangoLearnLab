@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
 from .forms import PostForm
@@ -81,19 +81,26 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 		return super().form_valid(form)
 	
 
-class PostUpdateView(LoginRequiredMixin, UpdateView):
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Post
 	template_name = 'blog/post_form.html'
 	form_class = PostForm
 
 	def get_queryset(self):
 		return Post.objects.filter(author=self.request.user)
+	
+	def test_func(self):
+		post = self.get_object()
+		return self.request.user == post.author  # Ensures only the author can edit
 
-
-class PostDeleteView(LoginRequiredMixin, DeleteView):
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 	model = Post
 	template_name = 'blog/post_confirm_delete.html'
 	success_url = reverse_lazy('post_list')
 
 	def get_queryset(self):
 		return Post.objects.filter(author=self.request.user)
+
+	def test_func(self):
+		post = self.get_object()
+		return self.request.user == post.author  # Ensures only the author can delete
