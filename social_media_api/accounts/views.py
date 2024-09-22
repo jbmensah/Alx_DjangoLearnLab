@@ -11,8 +11,6 @@ from rest_framework.decorators import api_view, permission_classes
 from .models import Post
 from .serializers import PostSerializer
 
-
-
 class RegisterView(generics.CreateAPIView):
 	serializer_class = RegisterSerializer
 
@@ -30,26 +28,27 @@ class RegisterView(generics.CreateAPIView):
 			"token": token.key  # Return the token in the response
 		})
 
+class FollowUserView(generics.GenericAPIView):
+	permission_classes = [IsAuthenticated]
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def follow_user(request, user_id):
-	try:
-		user_to_follow = CustomUser.objects.get(id=user_id)
-		request.user.following.add(user_to_follow)
-		return Response(status=status.HTTP_204_NO_CONTENT)
-	except CustomUser.DoesNotExist:
-		return Response(status=status.HTTP_404_NOT_FOUND)
+	def post(self, request, user_id):
+		try:
+			user_to_follow = CustomUser.objects.get(id=user_id)
+			request.user.following.add(user_to_follow)
+			return Response(status=status.HTTP_204_NO_CONTENT)
+		except CustomUser.DoesNotExist:
+			return Response(status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def unfollow_user(request, user_id):
-	try:
-		user_to_unfollow = CustomUser.objects.get(id=user_id)
-		request.user.following.remove(user_to_unfollow)
-		return Response(status=status.HTTP_204_NO_CONTENT)
-	except CustomUser.DoesNotExist:
-		return Response(status=status.HTTP_404_NOT_FOUND)
+class UnfollowUserView(generics.GenericAPIView):
+	permission_classes = [IsAuthenticated]
+
+	def post(self, request, user_id):
+		try:
+			user_to_unfollow = CustomUser.objects.get(id=user_id)
+			request.user.following.remove(user_to_unfollow)
+			return Response(status=status.HTTP_204_NO_CONTENT)
+		except CustomUser.DoesNotExist:
+			return Response(status=status.HTTP_404_NOT_FOUND)
 
 class LoginView(ObtainAuthToken):
 	def post(self, request, *args, **kwargs):
@@ -70,7 +69,6 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
 
 	def get_object(self):
 		return self.request.user  # Return the authenticated user's profile
-	
 
 class UserFeedView(generics.ListAPIView):
 	serializer_class = PostSerializer
